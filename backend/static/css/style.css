@@ -1,0 +1,47 @@
+body {
+    padding-top: 70px;
+}
+
+.navbar-brand {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+nav .navbar-nav li a {
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+textarea {
+    resize: none;
+}
+
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #322f2f;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.delete-form {
+    display: inline;
+}
+
+/* Custom styles for the DateField input */
+.datepicker {
+    /* Add your custom styles here */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Optional: Style the placeholder text color */
+.datepicker::placeholder {
+    color: #999;
+}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ quiz.QuizID }} - {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class = "col-lg-3 my-4">
+        <a href="{{ url_for("edit_quiz", quiz_id=quiz.QuizID) }}" class="btn btn-primary">Edit Quiz</a>
+        <form class="delete-form" method="POST" action = "{{ url_for('delete_quiz', quiz_id=quiz.QuizID) }}">
+            {{ deleteQuizForm.hidden_tag() }}
+            {{ deleteQuizForm.submit(class="btn btn-danger", onClick="return confirm('Are you sure you want to delete this quiz?')") }}
+        </form>
+    </div>
+    <div class="col-lg-7 my-5">
+        <h1>Preview of the Quiz: QuizID = {{ quiz.QuizID }}</h1><hr>
+        <p><strong>Quiz Period:</strong> From {{ quiz.Quiz_Start_Time }} to {{ quiz.Quiz_End_Time }}</p><br>
+        <p><strong>Quiz Duration:</strong> {{ quiz.Duration }} minutes</p>
+
+        <h3>Selected Questions</h3><hr>
+        <div class="col-lg-12"> <!-- occupying the other 9 parcels of 12 //-->
+            <div class="row my-5 card-wrapper">
+                {% if questions %}
+                {% for q in questions %}
+                <h4>Question {{ loop.index }}</h4><hr>
+                <div class="col-lg-12 col-md-6 mb-4">
+                    <div class="card h-100 w-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="{{ url_for("question", question_id=q.id) }}">{{ q.coursename }}</a>
+                            </h4>
+                            <p class="card-text">{{ q.description }}</p>
+                        </div>
+                        <div class="card-footer w-100">
+                            <small class="text-muted">
+                                {{ "A) " ~ q.Choice1 }}<br>
+                            </small>
+                            <small class="text-muted">
+                                {{ "B) " ~ q.Choice2 }}<br>
+                            </small>
+                            <small class="text-muted">
+                                {{ "C) " ~ q.Choice3 }}<br>
+                            </small>
+                            <small class="text-muted">
+                                {{ "D) " ~ q.Choice4 }}<br>
+                            </small>
+                            {% if q.Choice5 != '' %}
+                            <small class="text-muted">
+                                {{ "E) " ~ q.Choice5 }}<br>
+                            </small>
+                            {% endif %}
+                            {% if q.Choice6 != '' %}
+                            <small class="text-muted">
+                                {{ "F) " ~ q.Choice6 }}<br>
+                            </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h1 class="offset-lg-3">No questions to show</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

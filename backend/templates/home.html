@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% set active_page = 'home' %}
+
+{% block content %}
+    <!-- Row class of bootstrap divides the page into 12 parcels //-->
+    <div class="row">
+        <div class="col-lg-3"> <!-- occupying the 3 parcels of 12 //-->
+            <div class="my-4">
+                <form action="{{ url_for('home') }}" method="GET">
+                    <div class="form-group">
+                        <h4>Course Name</h4>
+                        {{ form.coursename(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        <h4>Question Description</h4>
+                        {{ form.description(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        <h4>Sort By</h4>
+                        {{ form.sortby(class="form-control") }}
+                    </div>
+                    {{ form.submit(class="btn btn-primary form-control") }}
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-9"> <!-- occupying the other 9 parcels of 12 //-->
+            <div class="row my-5 card-wrapper">
+                {% if questions %}
+                {% for q in questions %}
+                <div class="col-lg-9 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="{{ url_for("question", question_id=q.id) }}">{{ q.coursename }}</a>
+                            </h4>
+                            <p class="card-text">{{ q.description }}</p>
+                        </div>
+                        <div class="card-footer w-100">
+                            <small class="text-muted">
+                                {{ "A) " ~ q.Choice1 }}<br>
+                            </small>
+                            <small class="text-muted">
+                                {{ "B) " ~ q.Choice2 }}<br>
+                            </small>
+                            <small class="text-muted">
+                                {{ "C) " ~ q.Choice3 }}<br>
+                            </small>
+                            <small class="text-muted">
+                                {{ "D) " ~ q.Choice4 }}<br>
+                            </small>
+                            {% if q.Choice5 != '' %}
+                            <small class="text-muted">
+                                {{ "E) " ~ q.Choice5 }}<br>
+                            </small>
+                            {% endif %}
+                            {% if q.Choice6 != '' %}
+                            <small class="text-muted">
+                                {{ "F) " ~ q.Choice6 }}<br>
+                            </small>
+                            {% endif %}
+                            {% if q.Is_Selected == 0 %}
+                            <br><a href="{{ url_for("add_to_quiz_questions", question_id=q.id) }}" class="btn btn-primary">Add to Quiz Questions</a>
+                            {% endif %}
+                            {% if q.Is_Selected == 1 %}
+                            <br><a href="{{ url_for("remove_from_quiz_questions", question_id=q.id) }}" class="btn btn-danger">Remove from Quiz Questions</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h1 class="offset-lg-3">No questions to show</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

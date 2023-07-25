@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% set active_page = 'new_quiz' %}
+
+{% block title %}Create a new quiz - {% endblock %}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-9 offset-lg-2 my-5">
+        <h1>Create New Quiz</h1><hr>
+        <form method="POST" action="{{ url_for('new_quiz') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <h3>Quiz Date - Time:</h3>
+                
+                <div style="display: flex;">
+                    <label style="margin-right: 10px; font-weight: bold;">From: </label>
+                    {{ form.dt(class='datepicker', placeholder="DD-MM-YYYY") }}
+                    <label style="margin: 10px;">-</label>
+                    <div class="col-lg-1" style="flex-basis: 7%; margin: 0 5px;">
+                        {{ form.hour1(class='form-control') }}
+                    </div>   
+                    <label style="margin-right: 10px;">:</label>
+                    <div class="col-lg-1" style="flex-basis: 7%; margin: 0 5px;">
+                        {{ form.minutes1(class='form-control') }}
+                    </div>
+                    <div class="col-lg-1" style="flex-basis: 7%; margin: 0 5px;">
+                        {{ form.ampm(class='form-control') }}
+                    </div>
+                    <label style="margin-right: 10px; font-weight: bold;"> To: </label>
+                    {{ form.dt_last(class='datepicker', placeholder="DD-MM-YYYY") }}
+                    <label style="margin: 10px;">-</label>
+                    <div class="col-lg-1" style="flex-basis: 7%; margin: 0 5px;">
+                        {{ form.hour2(class='form-control') }}
+                    </div>   
+                    <label style="margin-right: 10px;">:</label>
+                    <div class="col-lg-1" style="flex-basis: 7%; margin: 0 5px;">
+                        {{ form.minutes2(class='form-control') }}
+                    </div>
+                    <div class="col-lg-1" style="flex-basis: 7%; margin: 0 5px;">
+                        {{ form.ampm2(class='form-control') }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h3>Quiz Duration(in mins):</h3>
+                {{ form.duration(class="form-control") }}
+            </div>
+            <h3>Selected Questions</h3><hr>
+            <div class="col-lg-12"> <!-- occupying the other 9 parcels of 12 //-->
+                <div class="row my-5 card-wrapper">
+                    {% if questions %}
+                    {% for q in questions %}
+                    <h4>Question {{ loop.index }}</h4><hr>
+                    <div class="col-lg-12 col-md-6 mb-4">
+                        <div class="card h-100 w-100">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="{{ url_for("question", question_id=q.id) }}">{{ q.coursename }}</a>
+                                </h4>
+                                <p class="card-text">{{ q.description }}</p>
+                            </div>
+                            <div class="card-footer w-100">
+                                <small class="text-muted">
+                                    {{ "A) " ~ q.Choice1 }}<br>
+                                </small>
+                                <small class="text-muted">
+                                    {{ "B) " ~ q.Choice2 }}<br>
+                                </small>
+                                <small class="text-muted">
+                                    {{ "C) " ~ q.Choice3 }}<br>
+                                </small>
+                                <small class="text-muted">
+                                    {{ "D) " ~ q.Choice4 }}<br>
+                                </small>
+                                {% if q.Choice5 != '' %}
+                                <small class="text-muted">
+                                    {{ "E) " ~ q.Choice5 }}<br>
+                                </small>
+                                {% endif %}
+                                {% if q.Choice6 != '' %}
+                                <small class="text-muted">
+                                    {{ "F) " ~ q.Choice6 }}<br>
+                                </small>
+                                {% endif %}
+                                {% if q.Is_Selected == 0 %}
+                                <br><a href="{{ url_for("add_to_quiz_questions", question_id=q.id) }}" class="btn btn-primary">Add to Quiz Questions</a>
+                                {% endif %}
+                                {% if q.Is_Selected == 1 %}
+                                <div class = "container"> 
+                                    <div class= "row">
+                                        <div class="col-md-6">
+                                            <br><a href="{{ url_for("remove_from_quiz_questions", question_id=q.id) }}" class="btn btn-danger">Remove from Quiz Questions</a>
+                                        </div>
+                                        <div class = "col-md-6">
+                                            <div class="form-outline" >
+                                                <input type="number"  name = "{{ loop.index }}" id="typeNumber" class="form-control" placeholder="Question Score" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h1 class="offset-lg-3">No questions to show</h1>
+                    {% endif %}
+                </div>
+            </div>
+
+            <hr>
+            {{ form.submit(class="btn btn-primary form-control") }}
+    </div>
+</div>
+
+{% endblock %}

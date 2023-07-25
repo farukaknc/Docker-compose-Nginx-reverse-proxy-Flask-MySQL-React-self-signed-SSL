@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mysqldb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: db
+    ports:
+      - 32000:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=3286
+      - MYSQL_DATABASE=quizapp
+      - MYSQL_PASSWORD=3286
+    networks:
+      - backend-network
+    volumes:
+      - my-datavolume:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    networks:
+      - backend-network
+    links:
+      - mysqldb
+    depends_on:
+      - mysqldb
+  nginx:
+    build: ./frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - backend-network
+    volumes:
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./frontend/build:/usr/share/nginx/html
+
+    depends_on:
+      - backend
+      - mysqldb
+
+networks:
+  backend-network:
+volumes:
+  my-datavolume:

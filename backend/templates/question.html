@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ question.coursename }} - {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class = "col-lg-3 my-4">
+        <a href="{{ url_for("edit_question", question_id=question.id) }}" class="btn btn-primary">Edit Question</a>
+        <form class="delete-form" method="POST" action = "{{ url_for('delete_question', question_id=question.id) }}">
+            {{ deleteQuestionForm.hidden_tag() }}
+            {{ deleteQuestionForm.submit(class="btn btn-danger", onClick="return confirm('Are you sure you want to delete this question?')") }}
+        </form>
+    </div>
+    <div class="col-lg-9">
+        <div class="card-mt-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">{{ question.coursename }}</h3>
+                    <p class="card-text">{{ question.description }}</p>
+                </div>
+                <div class="panel-footer">
+                    <h4>
+                        <div class="badge badge-secondary">{{ "A) " ~ question.Choice1 }}</div> <br>
+                        <div class="badge badge-secondary">{{ "B) " ~ question.Choice2 }}</div> <br>
+                        <div class="badge badge-secondary">{{ "C) " ~ question.Choice3 }}</div> <br>
+                        <div class="badge badge-secondary">{{ "D) " ~ question.Choice4 }}</div> <br>
+                        {% if question.Choice5 != '' %}
+                        <div class="badge badge-secondary">{{ "E) " ~ question.Choice5 }}</div> <br>
+                        {% endif %}
+                        {% if question.Choice6 != '' %}
+                        <div class="badge badge-secondary">{{ "F) " ~ question.Choice6 }}</div> <br>
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

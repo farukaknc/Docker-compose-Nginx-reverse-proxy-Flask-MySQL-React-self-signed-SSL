@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% set active_page = 'quiz_history' %}
+
+{% block title %}Quiz History - {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-7 offset-lg-2 my-5">
+        <h1>Previous Quizzes</h1><hr>
+        {% if prev_quizzes %}
+        {% for pq in prev_quizzes %}
+        <div class="col-lg-12 col-md-6 mb-4">
+            <div class="card h-100 w-100">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="{{ url_for("quiz", quiz_id=pq.QuizID) }}">Course Name: {{ pq.CourseName }}</a>
+                    </h4>
+                </div>
+                <div class="card-footer w-100">
+                    <small class="text-muted">
+                        <li>Quiz ID: {{ pq.QuizID }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Quiz Period: From {{ pq.Quiz_Start_Time }} to {{ pq.Quiz_End_Time }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Date of the quiz initiated: {{ pq.Quiz_Datetime }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Number of Participants: {{ pq.NumofParticipants }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Number of Questions: {{  pq.NumofQuestions }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Total Possible Score: {{  pq.TotalScorePossible }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Quiz Duration (in mins): {{  pq.Duration }}</li>
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3 class="offset-lg-3">No previous quizzes to show</h3>
+        {% endif %}
+
+        <h1>Active Quizzes</h1><hr>
+        {% if active_quizzes %}
+        {% for pq in active_quizzes %}
+        <div class="col-lg-12 col-md-6 mb-4">
+            <div class="card h-100 w-100">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="{{ url_for("quiz", quiz_id=pq.QuizID) }}">Course Name: {{ pq.CourseName }}</a>
+                    </h4>
+                </div>
+                <div class="card-footer w-100">
+                    <small class="text-muted">
+                        <li>Quiz ID: {{ pq.QuizID }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Quiz Period: From {{ pq.Quiz_Start_Time }} to {{ pq.Quiz_End_Time }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Date of the quiz initiated: {{ pq.Quiz_Datetime }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Number of Participants: {{ pq.NumofParticipants }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Number of Questions: {{  pq.NumofQuestions }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Total Possible Score: {{  pq.TotalScorePossible }}</li>
+                    </small>
+                    <small class="text-muted">
+                        <li>Quiz Duration (in mins): {{  pq.Duration }}</li>
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3 class="offset-lg-3">No active quizzes to show</h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

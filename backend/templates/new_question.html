@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% set active_page = 'new_question' %}
+
+{% block title %}Add new question - {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-7 offset-lg-2 my-5">
+        <h1>Add New Question</h1><hr>
+        <form method="POST" action="{{ url_for('new_question') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label>Course Name:</label>
+                {{ form.coursename(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label>Question Description:</label>
+                {{ form.description(class="form-control", rows="3") }}
+            </div>
+            <div class="form-group">
+                <label>Choice 1:</label>
+                {{ form.choice1(class="form-control", rows="2") }}
+            </div>
+            <div class="form-group">
+                <label>Choice 2:</label>
+                {{ form.choice2(class="form-control", rows="2") }}
+            </div>
+            <div class="form-group">
+                <label>Choice 3:</label>
+                {{ form.choice3(class="form-control", rows="2") }}
+            </div>
+            <div class="form-group">
+                <label>Choice 4:</label>
+                {{ form.choice4(class="form-control", rows="2") }}
+            </div>
+            <div class="form-group">
+                <label>Choice 5:</label>
+                {{ form.choice5(class="form-control", rows="2") }}
+            </div>
+            <div class="form-group">
+                <label>Choice 6:</label>
+                {{ form.choice6(class="form-control", rows="2") }}
+            </div>
+            <div class="form-group">
+                <label>Correct Answer:</label>
+                {{ form.correctanswer(class="form-control") }}
+            </div>
+
+            <hr>
+            {{ form.submit(class="btn btn-primary form-control") }}
+    </div>
+</div>
+{% endblock %}
